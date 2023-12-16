@@ -2,7 +2,7 @@
 
 namespace ReTo.Abstractions.Repositories;
 
-public interface IShortUrlRepository
+public interface IShortUrlRepository : IRepository
 {
     #region Query
     /// <summary>

@@ -10,10 +10,10 @@ public interface IOption : IModel
     /// <summary>
     /// 參數值
     /// </summary>
-    string? Value { get; }
+    string? Value { get; set; }
 
     /// <summary>
     /// 最後修改者
     /// </summary>
-    Guid? UpdaterID { get; }
+    Guid? UpdaterID { get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace ReTo.Abstractions.Repositories;
 
-public interface IOptionRepository
+public interface IOptionRepository : IRepository
 {
     #region Query
     /// <summary>
@@ -10,6 +10,13 @@ public interface IOptionRepository
     /// </summary>
     /// <returns>應用程式參數列表</returns>
     Task<IEnumerable<IOption>> GetOptionListAsync();
+
+    /// <summary>
+    /// 透過名稱取得參數
+    /// </summary>
+    /// <param name="name">參數名稱</param>
+    /// <returns>參數</returns>
+    Task<IOption?> GetOptionByNameAsync(string name);
     #endregion
     #region Options
     /// <summary>

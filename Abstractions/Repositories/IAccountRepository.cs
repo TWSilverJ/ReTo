@@ -2,7 +2,7 @@
 
 namespace ReTo.Abstractions.Repositories;
 
-public interface IAccountRepository
+public interface IAccountRepository : IRepository
 {
     #region Query
     /// <summary>

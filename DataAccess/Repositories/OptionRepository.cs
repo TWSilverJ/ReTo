@@ -14,8 +14,21 @@ public class OptionRepository(ReToContext context)
     #region Query
     public async Task<IEnumerable<IOption>> GetOptionListAsync()
     {
+        // 建立查詢語法
         var query = BuildOptionQuery();
+
+        // 產生搜尋結果
         return await query.ToListAsync();
+    }
+
+    public async Task<IOption?> GetOptionByNameAsync(string name)
+    {
+        // 建立查詢語法
+        var query = BuildOptionQuery()
+            .Where(x => x.Name == name);
+
+        // 產生搜尋結果
+        return await query.FirstOrDefaultAsync();
     }
     #endregion
     #region Options
