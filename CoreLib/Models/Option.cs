@@ -1,6 +1,6 @@
 ﻿using ReTo.Abstractions.Models;
 
-namespace CoreLib.Models;
+namespace ReTo.CoreLib.Models;
 
 internal class Option : Model, IOption
 {

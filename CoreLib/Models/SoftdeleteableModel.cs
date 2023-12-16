@@ -1,6 +1,6 @@
 ﻿using ReTo.Abstractions.Models;
 
-namespace CoreLib.Models;
+namespace ReTo.CoreLib.Models;
 
 internal class SoftdeleteableModel : Model, ISoftdeleteableModel
 {

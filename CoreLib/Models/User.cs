@@ -1,6 +1,6 @@
 ﻿using ReTo.Abstractions.Models;
 
-namespace CoreLib.Models;
+namespace ReTo.CoreLib.Models;
 
 internal class User : SoftdeleteableModel, IUser
 {
@@ -8,5 +8,5 @@ internal class User : SoftdeleteableModel, IUser
 
     public string Email { get; set; }
 
-    public bool IsEmailVerified { get; set; }
+    public bool IsEmailVerified { get; set; } = false;
 }

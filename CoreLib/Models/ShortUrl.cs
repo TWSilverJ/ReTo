@@ -1,7 +1,7 @@
 ﻿using ReTo.Abstractions.Models;
 using System.Net;
 
-namespace CoreLib.Models;
+namespace ReTo.CoreLib.Models;
 
 internal class ShortUrl : SoftdeleteableModel, IShortUrl
 {

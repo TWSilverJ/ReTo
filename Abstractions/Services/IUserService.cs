@@ -15,7 +15,8 @@ public interface IUserService
     /// <summary>
     /// 更新使用者資料
     /// </summary>
+    /// <param name="id">唯一識別碼</param>
     /// <param name="userDto">DTO</param>
     /// <returns>操作結果</returns>
-    Task<bool?> UpdateUserAsync(IUserDto userDto);
+    Task<bool?> UpdateUserAsync(Guid id, IUserDto userDto);
 }
