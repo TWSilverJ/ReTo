@@ -10,7 +10,7 @@ public interface IOption : IModel
     /// <summary>
     /// 參數值
     /// </summary>
-    string Value { get; }
+    string? Value { get; }
 
     /// <summary>
     /// 最後修改者

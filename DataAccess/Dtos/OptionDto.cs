@@ -10,7 +10,7 @@ internal class OptionDto : IOption
 
     public string Name { get; set; }
 
-    public string Value { get; set; }
+    public string? Value { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
