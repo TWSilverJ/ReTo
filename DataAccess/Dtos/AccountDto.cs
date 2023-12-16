@@ -1,13 +1,8 @@
 ﻿using ReTo.Abstractions.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReTo.DataAccess.Dtos;
 
-internal class Account : IAccount
+internal class AccountDto : IAccount
 {
     public int SequentialID { get; set; }
 

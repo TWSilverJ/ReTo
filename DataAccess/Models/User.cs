@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 /// <summary>
 /// 使用者
@@ -50,7 +50,7 @@ public partial class User
     /// </summary>
     public DateTime? DeletedAt { get; set; }
 
-    public virtual UserAccount IdNavigation { get; set; }
+    public virtual Account IdNavigation { get; set; }
 
     public virtual ICollection<Option> Options { get; set; } = new List<Option>();
 

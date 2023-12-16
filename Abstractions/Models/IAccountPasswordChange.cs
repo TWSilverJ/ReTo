@@ -1,11 +1,11 @@
 ﻿namespace ReTo.Abstractions.Models;
 
-public interface IPasswordLog : IModel, IClient
+public interface IAccountPasswordChange : IModel, IClient
 {
     /// <summary>
-    /// 使用者識別碼
+    /// 帳戶識別碼
     /// </summary>
-    Guid UserID { get; }
+    Guid AccountID { get; }
 
     /// <summary>
     /// 登入時間

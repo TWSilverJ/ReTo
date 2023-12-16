@@ -9,30 +9,30 @@
    "OutputContextPath": null,
    "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
-   "ProjectRootNamespace": "DataAccess",
+   "ProjectRootNamespace": "ReTo.DataAccess",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 2,
    "SelectedToBeGenerated": 0,
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[AccountLogins]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AccountPasswordChanges]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Accounts]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Options]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[ShortUrls]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[UserAccounts]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[UserLogins]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[UserPasswordLogs]",
          "ObjectType": 0
       },
       {

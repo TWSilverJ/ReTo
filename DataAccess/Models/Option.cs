@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 /// <summary>
 /// 應用程式參數

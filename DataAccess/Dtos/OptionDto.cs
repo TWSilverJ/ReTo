@@ -2,7 +2,7 @@
 
 namespace ReTo.DataAccess.Dtos;
 
-internal class User : IUser
+internal class OptionDto : IOption
 {
     public int SequentialID { get; set; }
 
@@ -10,13 +10,11 @@ internal class User : IUser
 
     public string Name { get; set; }
 
-    public string Email { get; set; }
-
-    public bool IsEmailVerified { get; set; }
+    public string Value { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
-    public DateTime? DeletedAt { get; set; }
+    public Guid? UpdaterID { get; set; }
 }

@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 /// <summary>
-/// 使用者帳號
+/// 應用程式帳戶
 /// </summary>
-public partial class UserAccount
+public partial class Account
 {
     /// <summary>
     /// 流水編號
@@ -55,9 +55,9 @@ public partial class UserAccount
     /// </summary>
     public DateTime? DeletedAt { get; set; }
 
+    public virtual ICollection<AccountLogin> AccountLogins { get; set; } = new List<AccountLogin>();
+
+    public virtual ICollection<AccountPasswordChange> AccountPasswordChanges { get; set; } = new List<AccountPasswordChange>();
+
     public virtual User User { get; set; }
-
-    public virtual ICollection<UserLogin> UserLogins { get; set; } = new List<UserLogin>();
-
-    public virtual ICollection<UserPasswordLog> UserPasswordLogs { get; set; } = new List<UserPasswordLog>();
 }

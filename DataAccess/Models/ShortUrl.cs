@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 public partial class ShortUrl
 {

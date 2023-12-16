@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 public partial class ReToContext : DbContext
 {
@@ -13,20 +13,155 @@ public partial class ReToContext : DbContext
     {
     }
 
+    public virtual DbSet<Account> Accounts { get; set; }
+
+    public virtual DbSet<AccountLogin> AccountLogins { get; set; }
+
+    public virtual DbSet<AccountPasswordChange> AccountPasswordChanges { get; set; }
+
     public virtual DbSet<Option> Options { get; set; }
 
     public virtual DbSet<ShortUrl> ShortUrls { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UserAccount> UserAccounts { get; set; }
-
-    public virtual DbSet<UserLogin> UserLogins { get; set; }
-
-    public virtual DbSet<UserPasswordLog> UserPasswordLogs { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Account>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("應用程式帳戶"));
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasComment("唯一識別碼")
+                .HasColumnName("ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(sysutcdatetime())")
+                .HasComment("建立時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DeletedAt)
+                .HasComment("刪除時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsEnabled)
+                .HasDefaultValue(true)
+                .HasComment("是否啟用");
+            entity.Property(e => e.Password)
+                .IsRequired()
+                .HasMaxLength(60)
+                .IsUnicode(false)
+                .HasComment("密碼");
+            entity.Property(e => e.PasswordExpireAt)
+                .HasComment("密碼有效期限")
+                .HasColumnType("datetime");
+            entity.Property(e => e.SequentialId)
+                .ValueGeneratedOnAdd()
+                .HasComment("流水編號")
+                .HasColumnName("SequentialID");
+            entity.Property(e => e.UpdatedAt)
+                .HasComment("最後更新時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Username)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasComment("帳號");
+        });
+
+        modelBuilder.Entity<AccountLogin>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("帳戶登入記錄"));
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasComment("唯一識別碼")
+                .HasColumnName("ID");
+            entity.Property(e => e.AccountId)
+                .HasComment("使用者識別碼")
+                .HasColumnName("AccountID");
+            entity.Property(e => e.ClientIp)
+                .IsRequired()
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasComment("客戶端 IP 位置")
+                .HasColumnName("ClientIP");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(sysutcdatetime())")
+                .HasComment("建立時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ExpireAt)
+                .HasComment("有效期限")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsRevoked).HasComment("是否作廢登入");
+            entity.Property(e => e.IsSuccessful).HasComment("是否成功登入");
+            entity.Property(e => e.LoginTime)
+                .HasDefaultValueSql("(sysutcdatetime())")
+                .HasComment("登入時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.SequentialId)
+                .ValueGeneratedOnAdd()
+                .HasComment("流水編號")
+                .HasColumnName("SequentialID");
+            entity.Property(e => e.UpdatedAt)
+                .HasComment("最後更新時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.UserAgent)
+                .IsRequired()
+                .IsUnicode(false)
+                .HasComment("客戶端代理程式");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.AccountLogins)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_AccountLogins_Accounts");
+        });
+
+        modelBuilder.Entity<AccountPasswordChange>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("帳戶密碼變更記錄"));
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasComment("唯一識別碼")
+                .HasColumnName("ID");
+            entity.Property(e => e.AccountId)
+                .HasComment("使用者識別碼")
+                .HasColumnName("AccountID");
+            entity.Property(e => e.ChangeTime)
+                .HasDefaultValueSql("(sysutcdatetime())")
+                .HasComment("變更時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ClientIp)
+                .IsRequired()
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasComment("客戶端 IP 位置")
+                .HasColumnName("ClientIP");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(sysutcdatetime())")
+                .HasComment("建立時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.OriginalPassword)
+                .IsRequired()
+                .HasMaxLength(60)
+                .IsUnicode(false)
+                .HasComment("原始密碼");
+            entity.Property(e => e.SequentialId)
+                .ValueGeneratedOnAdd()
+                .HasComment("流水編號")
+                .HasColumnName("SequentialID");
+            entity.Property(e => e.UpdatedAt)
+                .HasComment("最後更新時間")
+                .HasColumnType("datetime");
+            entity.Property(e => e.UserAgent)
+                .IsRequired()
+                .IsUnicode(false)
+                .HasComment("客戶端代理程式");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.AccountPasswordChanges)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_AccountPasswordChanges_Accounts");
+        });
+
         modelBuilder.Entity<Option>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("應用程式參數"));
@@ -60,6 +195,7 @@ public partial class ReToContext : DbContext
 
             entity.HasOne(d => d.Updater).WithMany(p => p.Options)
                 .HasForeignKey(d => d.UpdaterId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Options_Users");
         });
 
@@ -116,6 +252,7 @@ public partial class ReToContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.ShortUrls)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_ShortUrls_Users");
         });
 
@@ -154,143 +291,7 @@ public partial class ReToContext : DbContext
 
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.User)
                 .HasForeignKey<User>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Users_UserAccounts");
-        });
-
-        modelBuilder.Entity<UserAccount>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("使用者帳號"));
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("(newid())")
-                .HasComment("唯一識別碼")
-                .HasColumnName("ID");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(sysutcdatetime())")
-                .HasComment("建立時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.DeletedAt)
-                .HasComment("刪除時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.IsEnabled)
-                .HasDefaultValue(true)
-                .HasComment("是否啟用");
-            entity.Property(e => e.Password)
-                .IsRequired()
-                .HasMaxLength(60)
-                .IsUnicode(false)
-                .HasComment("密碼");
-            entity.Property(e => e.PasswordExpireAt)
-                .HasComment("密碼有效期限")
-                .HasColumnType("datetime");
-            entity.Property(e => e.SequentialId)
-                .ValueGeneratedOnAdd()
-                .HasComment("流水編號")
-                .HasColumnName("SequentialID");
-            entity.Property(e => e.UpdatedAt)
-                .HasComment("最後更新時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Username)
-                .IsRequired()
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasComment("帳號");
-        });
-
-        modelBuilder.Entity<UserLogin>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("使用者登入記錄"));
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("(newid())")
-                .HasComment("唯一識別碼")
-                .HasColumnName("ID");
-            entity.Property(e => e.ClientIp)
-                .IsRequired()
-                .HasMaxLength(45)
-                .IsUnicode(false)
-                .HasComment("客戶端 IP 位置")
-                .HasColumnName("ClientIP");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(sysutcdatetime())")
-                .HasComment("建立時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ExpireAt)
-                .HasComment("有效期限")
-                .HasColumnType("datetime");
-            entity.Property(e => e.IsRevoked).HasComment("是否作廢登入");
-            entity.Property(e => e.IsSuccessful).HasComment("是否成功登入");
-            entity.Property(e => e.LoginTime)
-                .HasDefaultValueSql("(sysutcdatetime())")
-                .HasComment("登入時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.SequentialId)
-                .ValueGeneratedOnAdd()
-                .HasComment("流水編號")
-                .HasColumnName("SequentialID");
-            entity.Property(e => e.UpdatedAt)
-                .HasComment("最後更新時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.UserAgent)
-                .IsRequired()
-                .IsUnicode(false)
-                .HasComment("客戶端代理程式");
-            entity.Property(e => e.UserId)
-                .HasComment("使用者識別碼")
-                .HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.UserLogins)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_UserLogins_UserAccounts");
-        });
-
-        modelBuilder.Entity<UserPasswordLog>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("使用者密碼記錄"));
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("(newid())")
-                .HasComment("唯一識別碼")
-                .HasColumnName("ID");
-            entity.Property(e => e.ChangeTime)
-                .HasDefaultValueSql("(sysutcdatetime())")
-                .HasComment("變更時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ClientIp)
-                .IsRequired()
-                .HasMaxLength(45)
-                .IsUnicode(false)
-                .HasComment("客戶端 IP 位置")
-                .HasColumnName("ClientIP");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(sysutcdatetime())")
-                .HasComment("建立時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.OriginalPassword)
-                .IsRequired()
-                .HasMaxLength(60)
-                .IsUnicode(false)
-                .HasComment("原始密碼");
-            entity.Property(e => e.SequentialId)
-                .ValueGeneratedOnAdd()
-                .HasComment("流水編號")
-                .HasColumnName("SequentialID");
-            entity.Property(e => e.UpdatedAt)
-                .HasComment("最後更新時間")
-                .HasColumnType("datetime");
-            entity.Property(e => e.UserAgent)
-                .IsRequired()
-                .IsUnicode(false)
-                .HasComment("客戶端代理程式");
-            entity.Property(e => e.UserId)
-                .HasComment("使用者識別碼")
-                .HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.UserPasswordLogs)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UserPasswordLogs_UserAccounts");
+                .HasConstraintName("FK_Users_Accounts");
         });
 
         OnModelCreatingPartial(modelBuilder);

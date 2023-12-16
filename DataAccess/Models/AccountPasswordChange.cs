@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace ReTo.DataAccess.Models;
 
 /// <summary>
-/// 使用者密碼記錄
+/// 帳戶密碼變更記錄
 /// </summary>
-public partial class UserPasswordLog
+public partial class AccountPasswordChange
 {
     /// <summary>
     /// 流水編號
@@ -23,7 +23,7 @@ public partial class UserPasswordLog
     /// <summary>
     /// 使用者識別碼
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid AccountId { get; set; }
 
     /// <summary>
     /// 變更時間
@@ -55,5 +55,5 @@ public partial class UserPasswordLog
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual UserAccount User { get; set; }
+    public virtual Account Account { get; set; }
 }

@@ -15,5 +15,5 @@ public interface IOption : IModel
     /// <summary>
     /// 最後修改者
     /// </summary>
-    Guid UpdaterID { get; }
+    Guid? UpdaterID { get; }
 }
