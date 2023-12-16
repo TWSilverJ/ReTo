@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Abstractions.Models;
+namespace ReTo.Abstractions.Models;
 
 public interface IClient
 {

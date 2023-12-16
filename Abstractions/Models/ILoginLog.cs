@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Models;
+﻿namespace ReTo.Abstractions.Models;
 
 public interface ILoginLog : IModel, IClient
 {

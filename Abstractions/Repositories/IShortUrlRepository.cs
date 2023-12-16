@@ -1,6 +1,6 @@
-﻿using Abstractions.Models;
+﻿using ReTo.Abstractions.Models;
 
-namespace Abstractions.Repositories;
+namespace ReTo.Abstractions.Repositories;
 
 public interface IShortUrlRepository
 {

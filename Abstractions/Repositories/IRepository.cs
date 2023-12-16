@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Repositories;
+﻿namespace ReTo.Abstractions.Repositories;
 
 public interface IRepository
 {
