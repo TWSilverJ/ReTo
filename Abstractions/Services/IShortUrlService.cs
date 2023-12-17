@@ -10,6 +10,7 @@ public interface IShortUrlService
     /// </summary>
     /// <param name="originalUrlDto">DTO</param>
     /// <returns>縮網址</returns>
+    /// <exception cref="TimeoutException">嘗試次數超過限制。</exception>
     Task<IShortUrl?> CreateShortUrlAsync(IOriginalUrlDto originalUrlDto);
 
     /// <summary>

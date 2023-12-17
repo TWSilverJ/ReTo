@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace ReTo.CoreLib.Utilities;
+﻿namespace ReTo.CoreLib.Utilities;
 
 internal static class RandomMagic
 {
@@ -14,12 +12,9 @@ internal static class RandomMagic
     /// <returns>隨機字串</returns>
     public static string GenerateRandomString(int length)
     {
-        var result = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
-        {
-            int index = _random.Next(chars.Length);
-            result.Append(chars[index]);
-        }
-        return result.ToString();
+        var randomStringArray = Enumerable.Repeat(chars, length)
+            .Select(s => s[_random.Next(s.Length)])
+            .ToArray();
+        return new string(randomStringArray);
     }
 }
