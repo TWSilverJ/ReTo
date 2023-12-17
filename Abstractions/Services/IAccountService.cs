@@ -13,6 +13,13 @@ public interface IAccountService
     Task<IEnumerable<IAccount>> GetAccountListAsync(IPagination pagination);
 
     /// <summary>
+    /// 透過 ID 取得帳戶
+    /// </summary>
+    /// <param name="id">唯一識別碼</param>
+    /// <returns>帳戶</returns>
+    Task<IAccount?> GetAccountByIdAsync(Guid id);
+
+    /// <summary>
     /// 建立帳戶
     /// </summary>
     /// <param name="accountDto">DTO</param>
@@ -22,16 +29,17 @@ public interface IAccountService
     /// <summary>
     /// 更改密碼
     /// </summary>
+    /// <param name="id">唯一識別碼</param>
     /// <param name="passwordDto">DTO</param>
     /// <returns>操作結果</returns>
-    Task<bool?> ChangePasswordAsync(IAccountPasswordDto passwordDto);
+    Task<bool?> ChangePasswordAsync(Guid id, IAccountPasswordDto passwordDto);
 
     /// <summary>
     /// 帳戶登入
     /// </summary>
     /// <param name="loginDto">DTO</param>
     /// <returns>帳戶</returns>
-    Task<IAccountLogin?> LoginAsync(IAccountLoginDto loginDto);
+    Task<IAccountLogin> LoginAsync(IAccountLoginDto loginDto);
 
     /// <summary>
     /// 登出單筆登入

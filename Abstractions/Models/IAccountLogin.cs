@@ -20,7 +20,7 @@ public interface IAccountLogin : IModel, IClient
     /// <summary>
     /// 是否作廢
     /// </summary>
-    bool IsRevoked { get; }
+    bool IsRevoked { get; set; }
 
     /// <summary>
     /// 有效期限

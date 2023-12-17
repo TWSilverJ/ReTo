@@ -5,7 +5,12 @@ namespace ReTo.Abstractions.Dtos;
 public interface IAccountPasswordDto : IClient
 {
     /// <summary>
-    /// 密碼
+    /// 原始密碼
     /// </summary>
-    string Password { get; }
+    string OriginalPassword { get; }
+
+    /// <summary>
+    /// 新密碼
+    /// </summary>
+    string NewPassword { get; }
 }
